@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VG App</title>
+    <title>VG App (TWA)</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <h1>VG App</h1>
-    <button id="referralBtn">Реферал кошуу</button>
+    <h1>VG App Реферал Системасы</h1>
+    
+    <input type="text" id="referralLink" readonly>
+    <button onclick="copyLink()">Шилтемени көчүрүү</button>
+    <button onclick="shareLink()">Досторго жөнөтүү</button>
 
     <script type="module" src="firebase-config.js"></script>
     <script type="module" src="script.js"></script>
-    <script>
-    let tg = window.Telegram.WebApp;
-    tg.expand(); // Толук экранга чыгарат
-    document.getElementById("username").innerText = tg.initDataUnsafe?.user?.username || "Аты белгисиз";
-    </script>
 </body>
 </html>
