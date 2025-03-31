@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html lang="kg">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VG App – Реферал</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VG App – Реферал</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div class="container">
-        <h1>VG App'ка кош келдиң!</h1>
-        <p>Досторуңду чакырып, белектерди утуп ал!</p>
-
-        <label>Рефералдык шилтемең:</label>
-        <input type="text" id="referralLink" readonly>
-        <button onclick="copyLink()">📋 Көчүрүү</button>
-        <button onclick="shareLink()">📤 Досторго жөнөтүү</button>
-
-        <h2>👥 Сенин досторуң</h2>
-        <p>Чакырган достор: <span id="referralCount">0</span></p>
-        <ul id="referralList"></ul>
+  <div class="container">
+    <h1>VG App'ка кош келдиң!</h1>
+    <p>Досторуңду чакырып, белектерди утуп ал!</p>
+    
+    <div class="referral-box">
+      <label>Рефералдык шилтемең:</label>
+      <input type="text" id="referralLink" readonly>
+      <button class="copy-btn" onclick="copyLink()">📋 Көчүрүү</button>
+      <button class="share-btn" onclick="shareLink()">📤 Досторго жөнөтүү</button>
     </div>
-
-    <script type="module" src="firebase-config.js"></script>
-    <script type="module" src="script.js"></script>
+    
+    <h2>👥 Сенин досторуң</h2>
+    <p>Чакырган достор: <span id="referralCount">0</span></p>
+    <ul id="referralList"></ul>
+  </div>
+  
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
+
 </html>
