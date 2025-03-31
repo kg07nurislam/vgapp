@@ -71,3 +71,32 @@ async function loadReferrals() {
 }
 
 loadReferrals();
+
+document.addEventListener("DOMContentLoaded", function () {
+    const referralInput = document.getElementById("referralLink");
+    const referralId = "VG" + Math.random().toString(36).substr(2, 6); // Уникалдуу ID
+    const referralLink = `https://vgapp.com/ref/${referralId}`; // Сайтка жараша өзгөрт
+    referralInput.value = referralLink;
+
+    // 📋 Шилтемени көчүрүү
+    window.copyLink = function () {
+        referralInput.select();
+        document.execCommand("copy");
+        alert("Рефералдык шилтемең көчүрүлдү!");
+    };
+
+    // 📤 Досторго жөнөтүү (Share API)
+    window.shareLink = function () {
+        if (navigator.share) {
+            navigator.share({
+                title: "VG App Реферал",
+                text: "Мага кошул! " + referralLink,
+                url: referralLink
+            })
+            .then(() => console.log("Шилтеме ийгиликтүү жөнөтүлдү"))
+            .catch((error) => console.error("Жөнөтүүдө ката кетти:", error));
+        } else {
+            alert("Сиздин браузер бул функцияны колдобойт!");
+        }
+    };
+});
