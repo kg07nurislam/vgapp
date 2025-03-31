@@ -19,10 +19,16 @@ function copyLink() {
     alert("Шилтеме көчүрүлдү!");
 }
 
-// Досторго бөлүшүү функциясы
+// **Досторго бөлүшүү функциясы (туура иштеген версия)**
 function shareLink() {
     let link = document.getElementById("referralLink").value;
-    Telegram.WebApp.openTelegramLink(link);
+    let text = `👋 Салам! VG App'ка кошулуп, белектерди утуп ал! 🎁\n\n🔗 Шилтеме: ${link}`;
+    
+    if (tg.isVersionAtLeast("6.1")) {
+        tg.openTelegramLink(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(text)}`);
+    } else {
+        alert("Бул функция Telegram'дын акыркы версиясында гана иштейт.");
+    }
 }
 
 window.copyLink = copyLink;
