@@ -1,23 +1,41 @@
 import { db } from "./firebase-config.js";
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
 
-// Telegram Web App'ти иштетүү
-const tg = window.Telegram.WebApp;
-tg.expand(); // Толук экранга чыгарат
+let tg = window.Telegram.WebApp;
+tg.expand(); // Веб-аппты экранды толук камтыш үчүн
 
-// Реферал кошуу функциясы
-document.getElementById("referralBtn").addEventListener("click", async () => {
-  try {
-    const user = tg.initDataUnsafe.user; // Telegram колдонуучусу
-    const docRef = await addDoc(collection(db, "VG_Users"), {
-      userId: user.id,
-      username: user.username,
-      coins: 100,
-      referrer: "None",
-      createdAt: new Date()
+let userId = tg.initDataUnsafe?.user?.id || "unknown";
+let referrerId = tg.initDataUnsafe?.start_param?.replace("ref_", "");
+
+// Рефералдык шилтеме түзүү
+let referralLink = `https://t.me/VGApp_bot?start=ref_${userId}`;
+document.getElementById("referralLink").value = referralLink;
+
+// Шилтемени көчүрүү функциясы
+function copyLink() {
+    let link = document.getElementById("referralLink");
+    link.select();
+    document.execCommand("copy");
+    alert("Шилтеме көчүрүлдү!");
+}
+
+// Досторго бөлүшүү функциясы
+function shareLink() {
+    let link = document.getElementById("referralLink").value;
+    Telegram.WebApp.openTelegramLink(link);
+}
+
+window.copyLink = copyLink;
+window.shareLink = shareLink;
+
+// Рефералды Firebase'ге сактоо
+if (referrerId && referrerId !== userId) {
+    let userRef = doc(db, "VG_Users", userId);
+    getDoc(userRef).then((docSnap) => {
+        if (!docSnap.exists()) {
+            setDoc(userRef, { referrer: referrerId })
+                .then(() => console.log("Реферал сакталды!"))
+                .catch((error) => console.error("Ката:", error));
+        }
     });
-    alert("Реферал кошулду! Документ ID: " + docRef.id);
-  } catch (e) {
-    console.error("Ката чыкты:", e);
-  }
-});
+}
